@@ -33,14 +33,14 @@ Array.prototype.pip = function (x, y) {
 var kriging = {};
 
 // Matrix algebra
-kriging_matrix_diag = function kriging_matrix_diag(c, n) {
+var kriging_matrix_diag = function kriging_matrix_diag(c, n) {
 	var i = void 0,
 	    Z = [0].rep(n * n);
 	for (i = 0; i < n; i++) {
 		Z[i * n + i] = c;
 	}return Z;
 };
-kriging_matrix_transpose = function kriging_matrix_transpose(X, n, m) {
+var kriging_matrix_transpose = function kriging_matrix_transpose(X, n, m) {
 	var i = void 0,
 	    j = void 0,
 	    Z = Array(m * n);
@@ -50,16 +50,7 @@ kriging_matrix_transpose = function kriging_matrix_transpose(X, n, m) {
 		}
 	}return Z;
 };
-kriging_matrix_scale = function kriging_matrix_scale(X, c, n, m) {
-	var i = void 0,
-	    j = void 0;
-	for (i = 0; i < n; i++) {
-		for (j = 0; j < m; j++) {
-			X[i * m + j] *= c;
-		}
-	}
-};
-kriging_matrix_add = function kriging_matrix_add(X, Y, n, m) {
+var kriging_matrix_add = function kriging_matrix_add(X, Y, n, m) {
 	var i = void 0,
 	    j = void 0,
 	    Z = Array(n * m);
@@ -70,7 +61,7 @@ kriging_matrix_add = function kriging_matrix_add(X, Y, n, m) {
 	}return Z;
 };
 // Naive matrix multiplication
-kriging_matrix_multiply = function kriging_matrix_multiply(X, Y, n, m, p) {
+var kriging_matrix_multiply = function kriging_matrix_multiply(X, Y, n, m, p) {
 	var i = void 0,
 	    j = void 0,
 	    k = void 0,
@@ -86,7 +77,7 @@ kriging_matrix_multiply = function kriging_matrix_multiply(X, Y, n, m, p) {
 	return Z;
 };
 // Cholesky decomposition
-kriging_matrix_chol = function kriging_matrix_chol(X, n) {
+var kriging_matrix_chol = function kriging_matrix_chol(X, n) {
 	var i = void 0,
 	    j = void 0,
 	    k = void 0,
@@ -110,7 +101,7 @@ kriging_matrix_chol = function kriging_matrix_chol(X, n) {
 	}return true;
 };
 // Inversion of cholesky decomposition
-kriging_matrix_chol2inv = function kriging_matrix_chol2inv(X, n) {
+var kriging_matrix_chol2inv = function kriging_matrix_chol2inv(X, n) {
 	var i = void 0,
 	    j = void 0,
 	    k = void 0,
@@ -145,7 +136,7 @@ kriging_matrix_chol2inv = function kriging_matrix_chol2inv(X, n) {
 	}
 };
 // Inversion via gauss-jordan elimination
-kriging_matrix_solve = function kriging_matrix_solve(X, n) {
+var kriging_matrix_solve = function kriging_matrix_solve(X, n) {
 	var m = n;
 	var b = Array(n * n);
 	var indxc = Array(n);
@@ -233,13 +224,13 @@ kriging_matrix_solve = function kriging_matrix_solve(X, n) {
 };
 
 // Variogram models
-kriging_variogram_gaussian = function kriging_variogram_gaussian(h, nugget, range, sill, A) {
+var kriging_variogram_gaussian = function kriging_variogram_gaussian(h, nugget, range, sill, A) {
 	return nugget + (sill - nugget) / range * (1.0 - Math.exp(-(1.0 / A) * Math.pow(h / range, 2)));
 };
-kriging_variogram_exponential = function kriging_variogram_exponential(h, nugget, range, sill, A) {
+var kriging_variogram_exponential = function kriging_variogram_exponential(h, nugget, range, sill, A) {
 	return nugget + (sill - nugget) / range * (1.0 - Math.exp(-(1.0 / A) * (h / range)));
 };
-kriging_variogram_spherical = function kriging_variogram_spherical(h, nugget, range, sill, A) {
+var kriging_variogram_spherical = function kriging_variogram_spherical(h, nugget, range, sill, A) {
 	if (h > range) return nugget + (sill - nugget) / range;
 	return nugget + (sill - nugget) / range * (1.5 * (h / range) - 0.5 * Math.pow(h / range, 3));
 };
@@ -370,7 +361,7 @@ kriging.train = function (t, x, y, model, sigma2, alpha) {
 	}
 
 	// Copy unprojected inverted matrix as K
-	K_C = C.slice(0);
+	var K_C = C.slice(0);
 	var M = kriging_matrix_multiply(C, t, n, n, 1);
 	variogram.K = K_C;
 	variogram.M = M;
